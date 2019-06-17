@@ -1,0 +1,98 @@
+<!DOCTYPE html lang="ja">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <title>MC Slot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"></link>
+    <style>
+      <!--
+      div.slot-container {
+        background-color:rgb(253, 252, 253);
+        width: 300px;
+        height: 300px;
+        border:1px solid rgba(253, 252, 253, 0.31);
+        box-shadow:0px 0px 3px lightpink;margin:auto;
+      }
+      .slot-entry {
+        background: rgb(0, 0, 0);
+      }
+      .slot-entry input[type="checkbox"] {
+        display: none;
+      }
+      .slot-entry input[type="checkbox"]:checked + img {
+        opacity: 1;
+      }
+      .slot-entry img {
+        opacity: 0.5;
+        height: 120px;
+        width: 120px;
+      }
+      img.slot-item {
+        height: 300px;
+        width: 300px;
+      }
+      .btn-container {
+        margin: 20px;
+        text-align: center;
+      }
+      .btn-container .start {
+        margin-right: 20px;
+      }
+      -->
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="js/roulette.min.js"></script>
+    <script>
+      $(function() {
+        initialze_slot();
+        $('.start').click(function() {
+          $('div.slot').roulette('start');  
+        });
+        $('.stop').click(function() {
+          $('div.slot').roulette('stop');  
+        });
+        $('.slot-entry input[type="checkbox"]').click(function() {
+          $('div.slot').remove();
+          initialze_slot();
+        });
+        function initialze_slot() {
+          var container = $('div.slot-container');
+          container.hide();
+          container.append('<div class="slot" style="display:none">');
+          var slot = $('div.slot');
+          $('.slot-entry input[type="checkbox"]:checked + img').each(function(index, element) {
+            slot.append('<img src="' + $(element).attr('src') + '"class="slot-item" />');
+          });
+          slot.roulette({ speed : 14, duration : 3 });
+          container.show();
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <h1>MC Slot</h1>
+      </div>
+      <div>
+        <h2>entries</h2>
+        <label class="slot-entry"><input type="checkbox" checked><img src="images/k.jpeg" /></label>
+        <label class="slot-entry"><input type="checkbox" checked><img src="images/n.jpeg" /></label>
+        <label class="slot-entry"><input type="checkbox" checked><img src="images/i.jpeg" /></label>
+        <label class="slot-entry"><input type="checkbox" checked><img src="images/m.png" /></label>
+        <label class="slot-entry"><input type="checkbox" checked><img src="images/kai.png" /></label>
+      </div>
+      <div class="slot-container">
+      </div>
+      <div class="btn-container">
+        <button class="btn btn-large btn-primary start">START</button>
+        <button class="btn btn-large btn-warning stop">STOP</button>
+      </div>
+    </div>
+  </body>
+</html>
