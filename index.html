@@ -51,10 +51,10 @@
       $(function() {
         initialze_slot();
         $('.start').click(function() {
-          $('div.slot').roulette('start');  
+          $('div.slot').roulette('start');
         });
         $('.stop').click(function() {
-          $('div.slot').roulette('stop');  
+          $('div.slot').roulette('stop');
         });
         $('.slot-entry input[type="checkbox"]').click(function() {
           $('div.slot').remove();
@@ -68,7 +68,21 @@
           $('.slot-entry input[type="checkbox"]:checked + img').each(function(index, element) {
             slot.append('<img src="' + $(element).attr('src') + '"class="slot-item" />');
           });
-          slot.roulette({ speed : 14, duration : 3 });
+          slot.roulette({
+            speed : 14,
+            duration : 3,
+            startCallback : function() {
+              $('button.start').attr('disabled', true);
+              $('button.stop').removeAttr('disabled');
+            },
+            slowDownCallback : function() {
+              $('button.stop').attr('disabled', true);
+            },
+            stopCallback : function($stopElm) {
+              $('button.start').removeAttr('disabled');
+              $('button.stop').attr('disabled', true);
+            }
+          });
           container.show();
         }
       });
@@ -91,7 +105,7 @@
       </div>
       <div class="btn-container">
         <button class="btn btn-large btn-primary start">START</button>
-        <button class="btn btn-large btn-warning stop">STOP</button>
+        <button class="btn btn-large btn-warning stop" disabled>STOP</button>
       </div>
     </div>
   </body>
