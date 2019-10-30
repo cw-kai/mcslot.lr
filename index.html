@@ -50,37 +50,35 @@
     <script>
       $(function() {
         initialze_slot();
-        $('.start').click(function() {
-          $('div.slot').roulette('start');
-        });
-        $('.stop').click(function() {
-          $('div.slot').roulette('stop');
-        });
+        $('.start').click(() => $('div.slot').roulette('start'));
+        $('.stop').click(() => $('div.slot').roulette('stop'));
         $('.slot-entry input[type="checkbox"]').click(function() {
           $('div.slot').remove();
           initialze_slot();
         });
         function initialze_slot() {
-          var container = $('div.slot-container');
+          const container = $('div.slot-container');
           container.hide();
           container.append('<div class="slot" style="display:none">');
-          var slot = $('div.slot');
-          $('.slot-entry input[type="checkbox"]:checked + img').each(function(index, element) {
+          const slot = $('div.slot');
+          const entries = $('.slot-entry input[type="checkbox"]:checked + img');
+          entries.each((index, element) => {
             slot.append('<img src="' + $(element).attr('src') + '"class="slot-item" />');
           });
+          const startButton = $('button.start');
+          const stopButton = $('button.stop');
+          startButton.attr('disabled', entries.length <= 1);
           slot.roulette({
-            speed : 14,
-            duration : 3,
-            startCallback : function() {
-              $('button.start').attr('disabled', true);
-              $('button.stop').removeAttr('disabled');
+            speed: 14,
+            duration: 3,
+            startCallback: () => {
+              startButton.attr('disabled', true);
+              stopButton.removeAttr('disabled');
             },
-            slowDownCallback : function() {
-              $('button.stop').attr('disabled', true);
-            },
-            stopCallback : function($stopElm) {
-              $('button.start').removeAttr('disabled');
-              $('button.stop').attr('disabled', true);
+            slowDownCallback: () => stopButton.attr('disabled', true),
+            stopCallback: $stopElm => {
+              startButton.removeAttr('disabled');
+              stopButton.attr('disabled', true);
             }
           });
           container.show();
